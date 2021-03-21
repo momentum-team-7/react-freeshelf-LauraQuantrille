@@ -1,32 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import bookData from './bookData'
-import { useState } from 'react'
-
-
-
-const Book = (props) => {
-  const { title, author, url, shortDescription, coverImageUrl, publisher, publicationDate, detailedDescription } = props
-  return (
-    <div className='book'>
-      <h2>{title}</h2>
-      <h2>{author}</h2>
-      <a href={url}></a>
-      <p>{shortDescription}</p>
-      <img src={coverImageUrl} />
-      <p>{publisher}</p>
-      <p>{publicationDate}</p>
-      <p>{detailedDescription}</p>
-
-    </div>
-  )
-}
 
 export const App = () => {
-  // const [bookData] = useState([])
+  const [newBookData, setnewBookData] = useState(bookData)
+
+  const handleMinimize = (title, minimized) => {
+    const secondBookData = newBookData.map((book) => {
+      if (book.title === title) {
+        return { ...book, minimized }
+      }
+      return book
+    })
+    setnewBookData(secondBookData)
+  }
+
   return (
     <div className='book'>
-      <h1>The Library is Open</h1>
-      {bookData.map((book, index) => (
+      <h1>The Library is Open!</h1>
+      {newBookData.map((book, index) => (
         <Book
           title={book.title}
           author={book.author}
@@ -36,6 +27,8 @@ export const App = () => {
           publisher={book.publisher}
           publicationDate={book.publicationDate}
           detailedDescription={book.detailedDescription}
+          minimized={book.minimized}
+          handleMinimize={handleMinimize}
           key={index}
         />
       ))}
@@ -43,6 +36,25 @@ export const App = () => {
     </div>
   )
 }
+
+const Book = (props) => {
+  const { title, author, url, shortDescription, coverImageUrl, publisher, publicationDate, detailedDescription, minimized, handleMinimize } = props
+  return (
+    <div className={minimized ? 'book book--minimized' : 'book'}>
+      <h2>{title}</h2>
+      <h2>{author}</h2>
+      <a href={url}></a>
+      <p>{shortDescription}</p>
+      <img src={coverImageUrl} />
+      <button onClick={() => handleMinimize(title, !minimized)}> {minimized ? 'More Information' : 'Less Information'}</button>
+      <p>{publisher}</p>
+      <p>{publicationDate}</p>
+      <p>{detailedDescription}</p>
+
+    </div>
+  )
+}
+
 
 export default App
 
