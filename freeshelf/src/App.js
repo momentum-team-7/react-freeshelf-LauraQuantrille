@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import bookData from './bookData'
+import './styles/App.css'
 
 export const App = () => {
   const [newBookData, setnewBookData] = useState(bookData)
@@ -43,30 +44,23 @@ const Book = (props) => {
     <div className={minimized ? 'book book--minimized' : 'book'}>
       <h2>{title}</h2>
       <h2>{author}</h2>
-      <a href={url}></a>
+      <a href={url}>Learn More</a>
       <p>{shortDescription}</p>
       <img src={coverImageUrl} />
-      <button onClick={() => handleMinimize(title, !minimized)}> {minimized ? 'More Information' : 'Less Information'}</button>
-      <p>{publisher}</p>
-      <p>{publicationDate}</p>
-      <p>{detailedDescription}</p>
-
+      <button
+        classname='info-btn'
+        onClick={() => handleMinimize(title, !minimized)}>
+        {minimized ? 'More Information' : 'Less Information'}
+      </button>
+      {!minimized && (
+        <>
+          <p>{publisher}</p>
+          <p>{publicationDate}</p>
+          <p>{detailedDescription}</p>
+        </>
+      )}
     </div>
   )
 }
 
-
 export default App
-
-// {/* <>
-//       <Book
-//         title='cool'
-//         author='LQ'
-//         description='big green guy'
-//         image='https://images.newscientist.com/wp-content/uploads/2020/09/22145012/big-frog-eyes.jpg'
-//         url=''
-//         publisher='kermit'
-//         publicationDate='08/11/1993'
-//         expandedDescription='lsasdlkfjalska'
-//       />
-//     </> */}
