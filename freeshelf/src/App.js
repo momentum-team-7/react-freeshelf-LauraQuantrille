@@ -17,7 +17,7 @@ export const App = () => {
 
   return (
     <div className='book'>
-      <h1>The Library is Open!</h1>
+      <h1 className='header'>The Library is Open!</h1>
       {newBookData.map((book, index) => (
         <Book
           title={book.title}
@@ -39,14 +39,26 @@ export const App = () => {
 }
 
 const Book = (props) => {
-  const { title, author, url, shortDescription, coverImageUrl, publisher, publicationDate, detailedDescription, minimized, handleMinimize } = props
+  const {
+    title,
+    author,
+    url,
+    shortDescription,
+    coverImageUrl,
+    publisher,
+    publicationDate,
+    detailedDescription,
+    minimized,
+    handleMinimize
+  } = props
+
   return (
     <div className={minimized ? 'book book--minimized' : 'book'}>
       <h2>{title}</h2>
       <h2>{author}</h2>
       <a href={url}>Learn More</a>
       <p>{shortDescription}</p>
-      <img src={coverImageUrl} />
+      <img className='image' src={coverImageUrl} />
       <button
         classname='info-btn'
         onClick={() => handleMinimize(title, !minimized)}>
@@ -64,3 +76,8 @@ const Book = (props) => {
 }
 
 export default App
+
+// // 
+// If this is true   && then do this - continue on to the next expression
+
+// if this is false || do this
